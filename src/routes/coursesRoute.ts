@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { statsController } from "../controllers/statsController";
+import { sessionController } from '../controllers/sessionController'
 
 const courseRouter: Router = Router();
 
-courseRouter.post('/:courseId', statsController.createSessionRecordForUser)
-courseRouter.get('/:courseId', statsController.getCourseLifetimeStatsForUser)
+courseRouter.post('/:courseId', sessionController.createSessionRecordForUser)
+courseRouter.get('/:courseId', sessionController.getCourseLifetimeStatsForUser)
 
-courseRouter.get('/:courseId/sessions/:sessionId', statsController.getSessionStatsForUser)
+courseRouter.get('/:courseId/sessions/:sessionId', sessionController.getSessionStatsForUser)
 
 export { courseRouter }; 

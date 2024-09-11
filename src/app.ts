@@ -4,7 +4,6 @@ import 'dotenv/config';
 import { Request, Response } from 'express';
 import { courseRouter } from './routes/coursesRoute';
 
-
 const app = express();
 
 app.use(bodyParser.json());
