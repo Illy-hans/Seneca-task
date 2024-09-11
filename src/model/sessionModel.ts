@@ -4,7 +4,7 @@ import { Schema, model } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
 // Interface for a single session 
-export interface SessionRecord { 
+interface SessionRecord { 
     courseId: string,
     userId: string,
     sessionId: string, 
@@ -14,8 +14,9 @@ export interface SessionRecord {
     timeStamp: Date, 
 }
 
-/*  Mongoose schema for the MongoDB database 
-    ALL required 
+/*  
+Mongoose schema for the MongoDB database 
+ALL required 
 */
 const statsSchema = new Schema<SessionRecord>({
     courseId: {type: String, required: true},
@@ -29,4 +30,4 @@ const statsSchema = new Schema<SessionRecord>({
 
 const SessionRecordDocument = model<SessionRecord>('SessionRecord', statsSchema)
 
-export { SessionRecordDocument }; 
+export { SessionRecordDocument, SessionRecord }; 
