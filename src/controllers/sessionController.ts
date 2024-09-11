@@ -79,9 +79,49 @@ const getCourseLifetimeStatsForUser = async (req: Request, res: Response): Promi
 };  
 
 
+/*
+This interface extends StudySessionVariables for the return of the GET single session stats function
+*/
+interface GetSessionReturn extends StudySessionVariables{
+    sessionId: string,
+};
+
+
+/*
+This function handles the return of a single session object 
+*/
+const getSessionStatsForUser = async (req: Request, res: Response): Promise<Response> => {
+    let singleSession: InstanceType<typeof SessionRecordDocument> | null;
+
+    try {
+        const sessionId: string = req.params.sessionId;
+        const userId: string = req.headers['x-user-id'] as string;
+
+        singleSession = await SessionRecordDocument.findOne({ sessionId, userId })
+        
+         // Ensure the session is not null before asserting
+        if (!singleSession) {
+            throw new Error("Session record not found");
+        }
+
+        const singleSessionReturn: GetSessionReturn = {
+            sessionId: singleSession.sessionId,
+            totalModulesStudied: singleSession.totalModulesStudied,
+            averageScore: singleSession.averageScore,
+            timeStudied: singleSession.timeStudied
+        }
+
+        return res.status(200).json({ Study_session_stats: singleSessionReturn})
+
+    } catch(error){
+        console.error(error);
+        return res.status(400).json({ message: "No session found", error: error });
+    };
+};
+
 
 export const sessionController = {
     createSessionRecordForUser,
     getCourseLifetimeStatsForUser,
-    // getSessionStatsForUser
+    getSessionStatsForUser
 };

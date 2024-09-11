@@ -36,8 +36,67 @@ const createSessionRecordForUser = (req, res) => __awaiter(void 0, void 0, void 
     }
     ;
 });
+/*
+This function handles the lifetime stats for the user, aggregating or averaging.
+- returns StudySessionVariables object or error
+*/
+const getCourseLifetimeStatsForUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userId = req.headers['x-user-id'];
+        const allSessionResults = yield sessionModel_1.SessionRecordDocument.find({ userId });
+        // Initialise variables for aggregation
+        let totalModules = 0;
+        let totalScores = 0;
+        let totalTimeStudied = 0;
+        allSessionResults.forEach((session) => {
+            totalModules += session.totalModulesStudied;
+            totalScores += session.averageScore;
+            totalTimeStudied += session.timeStudied;
+        });
+        const averageScore = totalScores / allSessionResults.length;
+        const aggregatedStats = {
+            totalModulesStudied: totalModules,
+            averageScore: averageScore,
+            timeStudied: totalTimeStudied
+        };
+        return res.status(200).json({ Lifetime_stats_for_course: aggregatedStats });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(400).json({ message: "Information not available", error: error });
+    }
+    ;
+});
+;
+/*
+This function handles the return of a single session object
+*/
+const getSessionStatsForUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let singleSession;
+    try {
+        const sessionId = req.params.sessionId;
+        const userId = req.headers['x-user-id'];
+        singleSession = yield sessionModel_1.SessionRecordDocument.findOne({ sessionId, userId });
+        // Ensure the session is not null before asserting
+        if (!singleSession) {
+            throw new Error("Session record not found");
+        }
+        const singleSessionReturn = {
+            sessionId: singleSession.sessionId,
+            totalModulesStudied: singleSession.totalModulesStudied,
+            averageScore: singleSession.averageScore,
+            timeStudied: singleSession.timeStudied
+        };
+        return res.status(200).json({ Study_session_stats: singleSessionReturn });
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(400).json({ message: "No session found", error: error });
+    }
+    ;
+});
 exports.sessionController = {
     createSessionRecordForUser,
-    // getCourseLifetimeStatsForUser,
-    // getSessionStatsForUser
+    getCourseLifetimeStatsForUser,
+    getSessionStatsForUser
 };
