@@ -1,0 +1,3 @@
+# Contains MongoDB URL only 
+.env
+node_modules
