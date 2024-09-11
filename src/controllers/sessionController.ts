@@ -49,7 +49,8 @@ const getCourseLifetimeStatsForUser = async (req: Request, res: Response): Promi
 
     try {
         const userId: string = req.headers['x-user-id'] as string;
-        const allSessionResults: SessionRecord[] = await SessionRecordDocument.find({ userId} )
+        const courseId: string = req.params.courseId;
+        const allSessionResults: SessionRecord[] = await SessionRecordDocument.find({ userId: userId, courseId: courseId} )
         
         // Initialise variables for aggregation
         let totalModules: number = 0;
@@ -95,9 +96,10 @@ const getSessionStatsForUser = async (req: Request, res: Response): Promise<Resp
 
     try {
         const sessionId: string = req.params.sessionId;
+        const courseId: string = req.params.courseId;
         const userId: string = req.headers['x-user-id'] as string;
 
-        singleSession = await SessionRecordDocument.findOne({ sessionId, userId })
+        singleSession = await SessionRecordDocument.findOne({ sessionId:sessionId, userId:userId, courseId:courseId })
         
          // Ensure the session is not null before asserting
         if (!singleSession) {

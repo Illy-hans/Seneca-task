@@ -30,7 +30,7 @@ describe("Tests single session return", () => {
     describe("GET, returns stats for a single study session", () => {
         it("should return session", async () => {
         const response = await request(app)
-            .get(`/courses/ape73734-0056-4b77-be72-74039d12fb22g/sessions/${newSessionRecord1.sessionId}`)
+            .get(`/courses/ebe73734-0056-4b77-be72-74039d12fb22g/sessions/${newSessionRecord1.sessionId}`)
             .set('x-user-id', 'ebe73990-0056-4b77-be72-74039d124r43fb89')
         
         expect(response.status).toBe(200);

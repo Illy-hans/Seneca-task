@@ -43,7 +43,8 @@ This function handles the lifetime stats for the user, aggregating or averaging.
 const getCourseLifetimeStatsForUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userId = req.headers['x-user-id'];
-        const allSessionResults = yield sessionModel_1.SessionRecordDocument.find({ userId });
+        const courseId = req.params.courseId;
+        const allSessionResults = yield sessionModel_1.SessionRecordDocument.find({ userId: userId, courseId: courseId });
         // Initialise variables for aggregation
         let totalModules = 0;
         let totalScores = 0;
@@ -75,8 +76,9 @@ const getSessionStatsForUser = (req, res) => __awaiter(void 0, void 0, void 0, f
     let singleSession;
     try {
         const sessionId = req.params.sessionId;
+        const courseId = req.params.courseId;
         const userId = req.headers['x-user-id'];
-        singleSession = yield sessionModel_1.SessionRecordDocument.findOne({ sessionId, userId });
+        singleSession = yield sessionModel_1.SessionRecordDocument.findOne({ sessionId: sessionId, userId: userId, courseId: courseId });
         // Ensure the session is not null before asserting
         if (!singleSession) {
             throw new Error("Session record not found");

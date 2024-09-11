@@ -41,8 +41,8 @@ describe("Tests lifetime stats for course", () => {
     }));
     afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
         yield Promise.all([
-            yield newSessionRecord1.deleteOne(),
-            yield newSessionRecord2.deleteOne(),
+            newSessionRecord1.deleteOne(),
+            newSessionRecord2.deleteOne(),
         ]);
     }));
     describe("GET, Lifetime stats for a user on a course", () => {

@@ -32,12 +32,12 @@ describe("Tests single session return", () => {
         yield newSessionRecord1.save();
     }));
     afterAll(() => __awaiter(void 0, void 0, void 0, function* () {
-        newSessionRecord1.deleteOne();
+        yield newSessionRecord1.deleteOne();
     }));
     describe("GET, returns stats for a single study session", () => {
         (0, globals_1.it)("should return session", () => __awaiter(void 0, void 0, void 0, function* () {
             const response = yield (0, supertest_1.default)(app_1.default)
-                .get(`/courses/ape73734-0056-4b77-be72-74039d12fb22g/sessions/${newSessionRecord1.sessionId}`)
+                .get(`/courses/ebe73734-0056-4b77-be72-74039d12fb22g/sessions/${newSessionRecord1.sessionId}`)
                 .set('x-user-id', 'ebe73990-0056-4b77-be72-74039d124r43fb89');
             (0, globals_1.expect)(response.status).toBe(200);
             const { Study_session_stats } = response.body;
