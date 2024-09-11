@@ -23,7 +23,7 @@ describe("Tests single session return", () => {
     });
 
     afterAll(async () => {
-        newSessionRecord1.deleteOne()
+        await newSessionRecord1.deleteOne()
     });
     
 

@@ -32,8 +32,8 @@ describe("Tests lifetime stats for course", () => {
 
     afterAll(async () => {
         await Promise.all([
-            await newSessionRecord1.deleteOne(),
-            await newSessionRecord2.deleteOne(),
+            newSessionRecord1.deleteOne(),
+            newSessionRecord2.deleteOne(),
         ]);
     });
 
