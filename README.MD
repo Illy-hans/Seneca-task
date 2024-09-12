@@ -1,5 +1,44 @@
 
-### Task summary 
+## Seneca BE task - Stats Service
+
+### Getting started
+
+To run the app locally, clone the repository and install the dependencies.
+
+```bash
+git clone https://github.com/Illy-hans/Seneca-task
+npm install
+```
+
+Set up a database connection by adding a MongoDB database URL into an .env file on the root. I would recommend using MongoDB compass here for visualisation. 
+
+```bash
+#.env
+MONGODB_URL="your_mongodb_database_url_here"
+```
+
+Ensure the tests are passing.
+
+```bash
+npm test
+```
+
+Run the Typescript compiler and start the server. Optional - make a Postman request to the API.
+
+```bash
+npm run build
+npm start
+```
+
+Build your Docker image.
+
+```bash
+docker build -t {your-image-name} .
+```
+
+
+<details>
+  <summary> Task outline can be found here </summary>
 
 <details>
   <summary>Task </summary>
@@ -164,3 +203,18 @@ paths:
 ```
 
 </details>
+
+</details>
+
+
+### Ideas for improvement
+
+Implementing a middleware to validate the X-User-Id, courseId and sessionId are in fact correct UUID formats.
+
+Build nested model structure that would have courseId as the main ID with users and sessions objects referenced. 
+ Courses
+    - courseId
+    - user: userId/ user object reference 
+    - sessions: list of Session objects from a seperate Session Model
+
+More detailed error handling and more tests. 
